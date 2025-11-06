@@ -15,6 +15,7 @@ jobs:
       - name: Build and Publish app
         run: |
           pwd
+          cd DemoWebApp/
           dotnet build
           dotnet publish --configuration Release --output ./publish/
       - name: Create Zip File
