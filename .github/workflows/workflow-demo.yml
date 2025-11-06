@@ -1,6 +1,9 @@
 name: Packaging and Pushing Artifactory for dotnet web App
-
 on: [push]
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   create-zip-file:
@@ -36,7 +39,18 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: DemoApp.zip
-      - name: Upload .zip in Azure blob container
-        run: |
-          echo running job
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Azure CLI script
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az account show
+            az storage blob --account-name storageaccountvmdemo1 --container blobdemo --name DemoApp.Zip --file DemoApp.zip --overwrite true
+
 
