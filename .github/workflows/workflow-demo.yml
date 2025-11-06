@@ -28,6 +28,7 @@ jobs:
           path: DemoApp.zip
 
   publish-zip-file:
+    needs: create-zip-file
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
