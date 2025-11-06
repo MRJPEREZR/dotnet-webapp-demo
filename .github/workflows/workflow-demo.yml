@@ -49,6 +49,6 @@ jobs:
           azcliversion: latest
           inlineScript: |
             az account show
-            az storage blob --account-name storageaccountvmdemo1 --container blobdemo --name DemoApp.Zip --file DemoApp.zip --overwrite true
+            az storage blob upload --account-name storageaccountvmdemo1 --container blobdemo --name DemoApp.Zip --file DemoApp.zip --overwrite true
 
 
