@@ -11,4 +11,5 @@ dotnet run
 
 ```
 dotnet publish --configuration Release --output ./publish/
+zip -r DemoApp.zip publish/
 ```
