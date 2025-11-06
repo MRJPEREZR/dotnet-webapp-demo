@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifacts@v4
+        uses: actions/download-artifact@v4
         with:
           name: DemoApp.zip
       - name: Upload .zip in Azure blob container
