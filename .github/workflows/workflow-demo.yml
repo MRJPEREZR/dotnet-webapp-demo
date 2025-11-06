@@ -1,0 +1,39 @@
+name: Packaging and Pushing Artifactory for dotnet web App
+
+on: [push]
+
+jobs:
+  create-zip-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v5
+      - name: Setup .NET 8.x
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+      - name: Build and Publish app
+        run: |
+          pwd
+          dotnet build
+          dotnet publish --configuration Release --output ./publish/
+      - name: Create Zip File
+        run: |
+          zip -r DemoApp.zip ./publish/
+      - name: Upload Artifactory
+        uses: actions/upload-artifact@v4
+        with:
+          name: DemoApp.zip
+          path: DemoApp.zip
+
+  publish-zip-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifacts@v4
+        with:
+          name: DemoApp.zip
+      - name: Upload .zip in Azure blob container
+        run: |
+          echo running job
+
